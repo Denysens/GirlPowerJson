@@ -1,0 +1,218 @@
+<!doctype html>
+<html lang="pt-br">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css">
+
+  <!--Bootstrap JavaScript-->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+    crossorigin="anonymous"></script>
+
+  <!--Js do Produto-->
+  <script src="produto.js"></script>
+  <title>THE GIRL POWER: Principal</title>
+
+  <style>
+    .navbar {
+      font-family: Georgia, 'Times New Roman', Times, serif;
+    }
+
+    .body {
+      min-width: 372px;
+    }
+
+    .card_img {
+      max-width: 265px;
+      max-height: 345px;
+    }
+
+    .card_corpo {
+      min-height: 112px;
+    }
+
+    .card_rodape {
+      min-height: 50px;
+    }
+  </style>
+</head>
+
+<body>
+  <!--MENU DE NAVEGAÇÃO-->
+  <nav class="navbar navbar-expand-lg bg-dark-subtle">
+    <div class="container fluid">
+      <a class="navbar-brand mb-0 text-dark">The Girl Power</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link active text-dark" href="index.html">Início</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle text-dark" href="#" role="button" data-bs-toggle="dropdown">
+              Coleções
+            </a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="#">Partes de Cima</a></li>
+              <li><a class="dropdown-item" href="#">Partes de Baixo</a></li>
+              <li><a class="dropdown-item" href="filtro.html">Vestidos</a></li>
+            </ul>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-dark">Sobre</a>
+          </li>
+        </ul>
+      </div>
+      <!--No final do menu-->
+      <!--Caixa de pesquisa e ícone da lupa-->
+      <div class="nav justify-content-end">
+        <li class="nav-item text-dark">
+          <form class="d-flex" role="search">
+            <input class="form-control me-2" type="search" placeholder="Pesquise" aria-label="Search">
+            <button class="btn" type="submit">
+              <i class="bi bi-search"></i>
+            </button>
+          </form>
+        </li>
+        <!--Sacolinha-->
+        <li class="nav-item">
+          <a class="nav-link text-dark" href="sacola.html">
+            <i class="bi bi-handbag"> </i>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-dark">
+            Login
+          </a>
+        </li>
+      </div>
+    </div>
+  </nav>
+
+  <!--CARROSSEL-->
+  <div id="carousel" class="carousel slide" data-bs-ride="carousel">
+    <div class="carousel-indicators">
+      <button type="button" data-bs-target="#carousel" data-bs-slide-to="0" class="active"></button>
+      <button type="button" data-bs-target="#carousel" data-bs-slide-to="1"></button>
+      <button type="button" data-bs-target="#carousel" data-bs-slide-to="2"></button>
+      <button type="button" data-bs-target="#carousel" data-bs-slide-to="3"></button>
+    </div>
+    <div class="carousel-inner">
+      <div class="carousel-item active" data-bs-interval="3000">
+        <img src="img/carrossel/img1.jpg" class="d-block w-100" alt="Imagem1">
+      </div>
+      <div class="carousel-item" data-bs-interval="3000">
+        <img src="img/carrossel/img2.jpg" class="d-block w-100" alt="Imagem2">
+      </div>
+      <div class="carousel-item" data-bs-interval="3000">
+        <img src="img/carrossel/img3.jpg" class="d-block w-100" alt="Imagem3">
+      </div>
+      <div class="carousel-item" data-bs-interval="3000">
+        <img src="img/carrossel/img4.jpg" class="d-block w-100" alt="Imagem4">
+      </div>
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#carousel" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon"></span>
+      <span class="visually-hidden">Anterior</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carousel" data-bs-slide="next">
+      <span class="carousel-control-next-icon"></span>
+      <span class="visually-hidden">Próximo</span>
+    </button>
+  </div>
+  <hr class="mt-3 ">
+
+  <!--CORPO DA PÁGINA-->
+  <main class="display-flex">
+    <div class="container" id="cards-produtos">
+    </div>
+    <div class="mt-3"></div>
+  </main>
+
+  <script>
+    const container = document.querySelector("#cards-produtos");
+    const baseUrl = "http://localhost:3000";
+
+    fetch(`${baseUrl}/produtos`)
+      .then(res => res.json())
+      .then(dataJSON => renderizar(dataJSON))
+      .catch(error => console.error('erro ao buscar os produtos:', error));
+
+    function renderizar(produtos){
+      let produtoHTML = "";
+      for(let index = 0; index <produtos.length; index++) {
+      produtoHTML += `
+                <div class="row">
+                    <div class="col-3">
+                      <produto-novo id="${produtos[index].id}" img = "${produtos[index].img}" titulo="${produtos[index].titulo}" preco="${produtos[index].preco}"promocao="${produtos[index].promocao}"/>
+                    </div>
+                </div>
+            `;
+    } 
+    container.innerHTML = produtoHTML;
+    
+    }
+  </script>
+
+  <!--RODAPÉ-->
+  <footer class="border-top text-dark bg-light">
+    <div class="container">
+      <div class="row py-3">
+
+        <div class="col-12 col-md-4 text-center">
+          <h4>Assine Nossa Newsletter</h4>
+          <form>
+            <div class="input-group mb-3">
+              <input type="email" class="form-control" placeholder="Email" id="Email">
+              <button type="submit" class="btn btn-outline-secondary">Assinar</button>
+            </div>
+          </form>
+        </div>
+
+        <div class="col-12 col-md-3 text-center ">
+          <h6>Ajuda</h6>
+          <p class="text-dark m-0">
+            Trocas e Devoluções
+          </p>
+          <p class="text-dark m-0">
+            Telefone:(84) 0 0000-0000
+          </p>
+          E-mail:<a href="mailto:powergirl@email.com" class="text-decoration-none text-dark">
+            powergirl@email.com
+          </a><br>
+        </div>
+
+        <div class="col-12 col-md-2 text-center">
+          <h6>Sobre</h6>
+          <p class="text-dark m-0">
+            Quem Somos
+          </p>
+          <p class="text-dark m-0">
+            Termos de Uso
+          </p>
+          <p class="text-dark m-0">
+            Política de Privacidade
+          </p>
+        </div>
+
+        <div class="col-12 col-md-3 text-center">
+          &copy; 2023 - Girl Online Ltda ME <br>
+          R. Mª Fashion, 425, Parelhas/RN<br>
+          CNPJ 55.5555.5555-0001-55
+        </div>
+      </div>
+    </div>
+  </footer>
+  </div>
+</body>
+
+</html>
